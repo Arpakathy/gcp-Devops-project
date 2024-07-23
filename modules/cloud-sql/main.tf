@@ -1,8 +1,3 @@
-
-locals {
-  networks = ["192.168.1.2", "192.168.2.3"]
-}
-
 resource "google_sql_database_instance" "default" {
   name             = var.instance_name
   database_version = "MYSQL_8_0"
@@ -13,8 +8,8 @@ resource "google_sql_database_instance" "default" {
 
     ip_configuration {
       authorized_networks {
-        name  = "public"
-        value = var.authorized_network
+          name  = "default-vpc-network"
+          value = module.vpc.subnetwork_cidr
       }
     }
   }

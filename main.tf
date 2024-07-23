@@ -12,6 +12,15 @@ provider "google" {
 #  billing_account = var.billing_account
 # }
 
+module "vpc" {
+  source          = "./modules/vpc"
+  network_name    = var.network_name
+  subnetwork_name = var.subnetworks
+  cidr            = var.cidr
+  region          = var.region
+
+}
+
 # Create a Cloud SQL instance
 
 module "cloud_sql" {
@@ -19,26 +28,16 @@ module "cloud_sql" {
   instance_name      = var.instance_name
   region             = var.region
   tier               = var.tier
-  authorized_network = var.authorized_network
+  authorized_networks = module.vpc.subnetwork_names
   database_name      = var.database_name
   username           = var.username
   password           = var.password
 }
 
-# Create a Cloud Storage bucket for static files
-
 module "storage_bucket" {
   source      = "./modules/storage-bucket"
   bucket_name = var.bucket_name
   location    = var.bucket_location
-}
-
-output "sql_instance_connection_name" {
-  value = module.cloud_sql.instance_connection_name
-}
-
-output "storage_bucket_name" {
-  value = module.storage_bucket.bucket_name
 }
 
 module "artifact_registry" {
@@ -71,4 +70,22 @@ output "service_url" {
 output "frontend_ip" {
   description = "The IP address of the load balancer"
   value       = module.load_balancer.frontend_ip
+}
+
+
+output "sql_instance_connection_name" {
+  value = module.cloud_sql.instance_connection_name
+}
+
+output "storage_bucket_name" {
+  value = module.storage_bucket.bucket_name
+}
+
+
+output "vpc_network_name" {
+  value = module.vpc.network_name
+}
+
+output "subnet_names" {
+  value = module.vpc.subnetwork_names
 }

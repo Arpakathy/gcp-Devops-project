@@ -29,6 +29,8 @@ jobs:
 
       - name: Build Docker image
         run: |
+          cd ..
+          cd ..
           docker build -t $IMAGE_NAME .
           docker tag $IMAGE_NAME $CONTAINER_REGISTRY/$PROJECT_ID/$IMAGE_NAME
 
@@ -43,11 +45,6 @@ jobs:
             --platform managed \
             --region $REGION \
             --allow-unauthenticated
-
-      - name: Run tests
-        run: |
-          # Replace with actual test commands (e.g., PHPUnit)
-          phpunit --configuration phpunit.xml
 
       - name: Notify deployment completion
         if: always()

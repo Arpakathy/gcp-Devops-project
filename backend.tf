@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "<your_bucket_name>"
+    bucket  = "remotestate"
     prefix  = "terraform/state"
   }
 }

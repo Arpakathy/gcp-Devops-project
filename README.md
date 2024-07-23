@@ -1,23 +1,38 @@
-### Initialize and Apply Terraform Configuration
-#Navigate to the Terraform Directory
-#Navigate to the directory containing your Terraform files:
+# Part 1: Infrastructure as Code (Terraform Configuration)
 
-##Copy code
-cd /path/to/your/terraform/directory
-Initialize Terraform
-Initialize Terraform:
+## Overview
 
-sh
-Copy code
+To Create the needed ressources we have used module definitions and a Main Terraform configuration file orchestrating modules.
+
+## Running the Terraform configuration to deploy infrastructure
+
+To initialize the terraform Code
+```
 terraform init
-Apply Terraform Configuration
-Apply the Terraform configuration:
+```
 
-sh
-Copy code
-terraform apply
-When prompted, provide the necessary variable values (such as project_id, instance_name, bucket_name, etc.).
+To apply the current configurations
 
-By following these steps, you will successfully create a Google Cloud project (optionally), a Cloud SQL instance (MySQL), and a Cloud Storage bucket for static files using Terraform modules.
+```
+terraform apply -auto-approve
+```
+## Accessing the deployed application
 
-## gcp-Devops-project
+To access the created ressources click on the link of the output of each other in the lastest lines when the terraform code has been fully and to access the application click  the output link of the loadbalancer
+
+# Part 2: CI/CD Pipeline with GitHub Actions
+
+Go to the .github/workflows/main.yaml file to see the workflow configurations. The line below are an overview on the steps we used in the worflow:
+
+## Steps:
+
+# Checkout repository: 
+Fetches the latest code from the repository.
+# Set up Google Cloud SDK: 
+Configures gcloud CLI with the provided service account key.
+# Build Docker image: 
+Builds the Docker image using the Dockerfile in the repository.
+# Push Docker image to GCR: 
+Pushes the built Docker image to Google Container Registry.
+# Deploy to Cloud Run: 
+Deploys the Docker image to Cloud Run using gcloud run deploy.

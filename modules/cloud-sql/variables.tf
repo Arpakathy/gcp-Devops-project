@@ -13,9 +13,9 @@ variable "tier" {
   type        = string
 }
 
-variable "authorized_network" {
-  description = "The authorized network for the Cloud SQL instance"
-  type        = string
+variable "authorized_networks" {
+  description = "The authorized networks for the Cloud SQL instance"
+  type        = list(string)
 }
 
 variable "database_name" {
