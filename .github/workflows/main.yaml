@@ -29,8 +29,6 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cd ..
-          cd ..
           cd docker
           docker build -t $IMAGE_NAME .
           docker tag $IMAGE_NAME $CONTAINER_REGISTRY/$PROJECT_ID/$IMAGE_NAME
