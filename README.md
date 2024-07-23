@@ -26,13 +26,17 @@ Go to the .github/workflows/main.yaml file to see the workflow configurations. T
 
 ## Steps:
 
-# Checkout repository: 
+### Checkout repository: 
 Fetches the latest code from the repository.
-# Set up Google Cloud SDK: 
+
+### Set up Google Cloud SDK: 
 Configures gcloud CLI with the provided service account key.
-# Build Docker image: 
+
+### Build Docker image: 
 Builds the Docker image using the Dockerfile in the repository.
-# Push Docker image to GCR: 
+
+### Push Docker image to GCR: 
 Pushes the built Docker image to Google Container Registry.
-# Deploy to Cloud Run: 
+
+### Deploy to Cloud Run: 
 Deploys the Docker image to Cloud Run using gcloud run deploy.
