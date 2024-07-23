@@ -48,4 +48,4 @@ jobs:
 
       - name: Notify deployment completion
         if: always()
-        run: echo "Deployment completed successfully"
+        run: echo "Deployment is completed successfully"
