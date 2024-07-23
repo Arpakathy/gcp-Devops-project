@@ -41,15 +41,6 @@ output "storage_bucket_name" {
   value = module.storage_bucket.bucket_name
 }
 
-output "project_id" {
-  value = module.project.project_id
-}
-
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
 module "artifact_registry" {
   source      = "./modules/artifact-registry"
   project_id  = var.project_id

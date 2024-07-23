@@ -8,39 +8,18 @@ variable "project_id" {
   type        = string
 }
 
-variable "create_project" {
-  description = "Whether to create a new project"
-  type        = bool
-  default     = false
-}
-
-variable "org_id" {
-  description = "The organization ID"
-  type        = string
-}
-
-variable "billing_account" {
-  description = "The billing account ID"
-  type        = string
-}
-
 variable "region" {
   description = "The region for resources"
   type        = string
 }
 
 variable "instance_name" {
-  description = "The name of the Cloud SQL instance"
+  description =  "Cloud-sql-Instance"  #"The name of the Cloud SQL instance"
   type        = string
 }
 
 variable "tier" {
-  description = "The tier for the Cloud SQL instance"
-  type        = string
-}
-
-variable "authorized_network" {
-  description = "The authorized network for the Cloud SQL instance"
+  description = "db-f1-micro"  #"The tier for the Cloud SQL instance"
   type        = string
 }
 
@@ -67,11 +46,6 @@ variable "bucket_name" {
 
 variable "bucket_location" {
   description = "The location of the storage bucket"
-  type        = string
-}
-
-variable "project_id" {
-  description = "The ID of the GCP project"
   type        = string
 }
 

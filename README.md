@@ -1,4 +1,4 @@
-###Initialize and Apply Terraform Configuration
+### Initialize and Apply Terraform Configuration
 #Navigate to the Terraform Directory
 #Navigate to the directory containing your Terraform files:
 

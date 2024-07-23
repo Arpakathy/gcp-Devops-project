@@ -1,3 +1,8 @@
+
+locals {
+  networks = ["192.168.1.2", "192.168.2.3"]
+}
+
 resource "google_sql_database_instance" "default" {
   name             = var.instance_name
   database_version = "MYSQL_8_0"

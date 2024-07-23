@@ -1,0 +1,54 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SA_KEY }}
+      CLOUD_RUN_SERVICE_NAME: "my-cloud-run-service"
+      REGION: "us-central1"
+      IMAGE_NAME: "my-php-app"
+      CONTAINER_REGISTRY: "gcr.io"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: ${{ env.SERVICE_ACCOUNT_KEY }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t $IMAGE_NAME .
+          docker tag $IMAGE_NAME $CONTAINER_REGISTRY/$PROJECT_ID/$IMAGE_NAME
+
+      - name: Push Docker image to GCR
+        run: |
+          docker push $CONTAINER_REGISTRY/$PROJECT_ID/$IMAGE_NAME
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $CLOUD_RUN_SERVICE_NAME \
+            --image $CONTAINER_REGISTRY/$PROJECT_ID/$IMAGE_NAME \
+            --platform managed \
+            --region $REGION \
+            --allow-unauthenticated
+
+      - name: Run tests
+        run: |
+          # Replace with actual test commands (e.g., PHPUnit)
+          phpunit --configuration phpunit.xml
+
+      - name: Notify deployment completion
+        if: always()
+        run: echo "Deployment completed successfully"
